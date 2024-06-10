@@ -49,7 +49,7 @@ function generate_products_html() {
                     Added
                 </div>
 
-                <button class="add-to-cart-button button-primary">
+                <button class="add-to-cart-button button-primary js-add-to-cart-button" data-product-id="${product.id}">
                     Add to Cart
                 </button>
             </div>
@@ -62,12 +62,34 @@ function generate_products_html() {
 }
 
 function add_to_cart(product_id){
-    cart.forEach(() => {
-        
+    for (const item of cart){
+        if (item.id === product_id){
+            item.quantity += 1;
+            return;
+        }
+    }
+
+    cart.push({
+        id: product_id,
+        quantity: 1,
     });
 }
 
+function update_cart_quantity(){
+    let quantity = 0;
+    for (const item of cart) quantity += item.quantity;
+    document.querySelector(".js-cart-quantity").innerHTML = quantity;
+}
+
 document.querySelector(".js-products-grid").innerHTML = generate_products_html();
+
+document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
+    button.addEventListener("click", () => {
+        add_to_cart(button.dataset.productId);
+        console.log(cart);
+        update_cart_quantity();
+    });
+});
 
 // let button = document.querySelector('.add-to-cart-button');
 // console.log(button);
