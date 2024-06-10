@@ -1,3 +1,4 @@
+import { format_currency } from "../scripts/utils/money.js";
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -683,7 +684,7 @@ export function generate_products_html() {
               </div>
 
               <div class="product-price">
-                  $${product.priceCents / 100}
+                  $${format_currency(product.priceCents)}
               </div>
 
               <div class="product-quantity-container">

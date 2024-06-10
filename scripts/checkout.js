@@ -1,5 +1,6 @@
 import { cart } from "../data/cart.js";
 import { products } from "../data/products.js";
+import { format_currency } from "./utils/money.js";
 
 function find_product_by_id(product_id) {
     for (const product of products){
@@ -32,7 +33,7 @@ function generate_checkout_products_html() {
                     ${matching_product.name}
                     </div>
                     <div class="product-price">
-                    ${matching_product.priceCents / 100}
+                    $${format_currency(matching_product.priceCents)}
                     </div>
                     <div class="product-quantity">
                     <span>
@@ -54,7 +55,7 @@ function generate_checkout_products_html() {
                     <div class="delivery-option">
                     <input type="radio" checked
                         class="delivery-option-input"
-                        name="delivery-option-1">
+                        name="delivery-option-${matching_product.id}">
                     <div>
                         <div class="delivery-option-date">
                         Tuesday, June 21
@@ -67,7 +68,7 @@ function generate_checkout_products_html() {
                     <div class="delivery-option">
                     <input type="radio"
                         class="delivery-option-input"
-                        name="delivery-option-1">
+                        name="delivery-option-${matching_product.id}">
                     <div>
                         <div class="delivery-option-date">
                         Wednesday, June 15
@@ -80,7 +81,7 @@ function generate_checkout_products_html() {
                     <div class="delivery-option">
                     <input type="radio"
                         class="delivery-option-input"
-                        name="delivery-option-1">
+                        name="delivery-option-${matching_product.id}">
                     <div>
                         <div class="delivery-option-date">
                         Monday, June 13
