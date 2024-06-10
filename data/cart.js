@@ -30,3 +30,15 @@ export function update_cart_quantity(){
     for (const item of cart) quantity += item.quantity;
     document.querySelector(".js-cart-quantity").innerHTML = quantity;
 }
+
+export function remove_from_cart(product_id){
+    let idx = -1;
+    for (let i=0;i<cart.length;i++){
+        if (cart[i].id === product_id){
+            idx = i;
+            break;
+        }
+    }
+
+    if (idx > -1) cart.splice(idx, 1);
+}
