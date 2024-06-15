@@ -17,6 +17,7 @@ var timeout_id = null;
 
 function main() {
     document.querySelector(".js-products-grid").innerHTML = generate_products_html();
+    update_cart_quantity();
 
     document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
         button.addEventListener("click", () => {

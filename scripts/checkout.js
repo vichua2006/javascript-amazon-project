@@ -1,4 +1,4 @@
-import { cart, remove_from_cart } from "../data/cart.js";
+import { cart, remove_from_cart, compute_cart_quantity } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { format_currency } from "./utils/money.js";
 
@@ -104,17 +104,35 @@ function generate_checkout_products_html() {
 
 function render_checkout_page(){
     document.querySelector(".js-order-summary").innerHTML = generate_checkout_products_html();
+    update_items_display();
 }
 
-render_checkout_page();
+function update_items_display(){
+    const checkout_header = document.querySelector(".js-checkout-header-text");
+    checkout_header.innerHTML = `${compute_cart_quantity()} items`;
+}
 
-document.querySelectorAll(".js-delete-link")
-    .forEach((link) => {
-        link.addEventListener("click", () => {
-            const product_id = link.dataset.productId;
-            remove_from_cart(product_id);
+function main(){
+    render_checkout_page();
 
-            const container = document.querySelector(`.js-cart-item-container-${product_id}`)
-            container.remove();
+    
+    document.querySelectorAll(".js-delete-link")
+        .forEach((link) => {
+            link.addEventListener("click", () => {
+                // removing item from cart
+                const product_id = link.dataset.productId;
+                remove_from_cart(product_id);
+                
+                // removing html element
+                const container = document.querySelector(`.js-cart-item-container-${product_id}`)
+                container.remove();
+
+                update_items_display();
+                // also possible delete from carte and re-render, but this bit of code must be placed in the render function
+            });
         });
-    });
+
+    
+}
+
+main();

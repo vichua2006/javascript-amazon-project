@@ -31,9 +31,7 @@ export function add_to_cart(product_id){
 }
 
 export function update_cart_quantity(){
-    let quantity = 0;
-    for (const item of cart) quantity += item.quantity;
-    document.querySelector(".js-cart-quantity").innerHTML = quantity;
+    document.querySelector(".js-cart-quantity").innerHTML = compute_cart_quantity();
 }
 
 export function remove_from_cart(product_id){
@@ -52,4 +50,10 @@ export function remove_from_cart(product_id){
 export function save_to_storage(){
     const cart_json = JSON.stringify(cart);
     localStorage.setItem('cart', cart_json);
+}
+
+export function compute_cart_quantity(){
+    let quantity = 0;
+    for (const item of cart) quantity += item.quantity;
+    return quantity;
 }
