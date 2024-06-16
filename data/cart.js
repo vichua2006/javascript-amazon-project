@@ -57,3 +57,14 @@ export function compute_cart_quantity(){
     for (const item of cart) quantity += item.quantity;
     return quantity;
 }
+
+export function change_item_quantity_by_id(id, new_quantity){
+    for (let item of cart){
+        if (item.id === id){
+            item.quantity = new_quantity;
+            return;
+        }
+    }
+
+    save_to_storage();
+}
