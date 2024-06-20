@@ -3,11 +3,13 @@ if (!cart){
     cart = [
         {
             id: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-            quantity: 1,
+            quantity: 2,
+            delivery_options: "1",
         }, 
         {
             id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
             quantity: 1,
+            delivery_options: "2",
         }
     ];
 }
@@ -25,6 +27,8 @@ export function add_to_cart(product_id){
     cart.push({
         id: product_id,
         quantity: selected_quantity,
+        // option 1 as default
+        delivery_options: "1",
     });
 
     save_to_storage();
