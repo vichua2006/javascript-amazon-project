@@ -1,4 +1,4 @@
-import { cart, remove_from_cart, compute_cart_quantity, change_item_quantity_by_id } from "../data/cart.js";
+import { cart, remove_from_cart, compute_cart_quantity, change_item_quantity_by_id, update_delivery_option } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { format_currency } from "./utils/money.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
@@ -29,7 +29,6 @@ function generate_checkout_products_html() {
 
         let delivery_option;
         for (let option of delivery_options){
-            
             if (cart_item.delivery_options === option.id){
                 delivery_option = option;
             }
@@ -94,7 +93,6 @@ function generate_checkout_products_html() {
 function generate_delivery_options_html(matching_product, cart_item){
 
     let combined_html = "";
-    console.log(matching_product);
 
     delivery_options.forEach((option) => {
 
@@ -102,7 +100,7 @@ function generate_delivery_options_html(matching_product, cart_item){
         // using terinary operator to determine if radio selector should be checked
         const new_html = 
         `
-            <div class="delivery-option">
+            <div class="delivery-option js-delivery-option" data-product-id="${matching_product.id}" data-delivery-id="${option.id}">
                 <input type="radio" 
                 ${(option.id === cart_item.delivery_options ? "checked" : "")}
                 class="delivery-option-input"
@@ -181,15 +179,24 @@ function add_all_listeners(){
                 update_items_display();
             });
         });
+
+    // adding event listeners for delivery options
+    document.querySelectorAll(".js-delivery-option")
+        .forEach((option) => {
+            option.addEventListener("click", () => {
+                const product_id = option.dataset.productId;
+                const od_id = option.dataset.deliveryId;  
+                update_delivery_option(product_id, od_id);
+            });
+        });
 }
 
 
 
 function main(){
-    console.log(cart);
     render_checkout_page();
     add_all_listeners();
-    
+
 }
 
 main();

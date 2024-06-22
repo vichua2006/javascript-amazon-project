@@ -72,3 +72,18 @@ export function change_item_quantity_by_id(id, new_quantity){
 
     save_to_storage();
 }
+
+export function update_delivery_option(product_id, delivery_option_id){
+    let matching_item;
+    for (let item of cart){
+        if (item.id === product_id){
+            matching_item = item;
+            break;
+        }
+    }
+    
+    matching_item.delivery_options = delivery_option_id;
+    // updated carte, thus update storage;
+    save_to_storage();
+    return;
+}
