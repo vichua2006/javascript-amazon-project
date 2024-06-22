@@ -123,12 +123,15 @@ function generate_delivery_options_html(matching_product, cart_item){
     return combined_html;
 }
 
-function render_checkout_page(){
+function render_order_summary(){
     document.querySelector(".js-order-summary").innerHTML = generate_checkout_products_html();
     update_items_display();
+
+    add_all_listeners();
 }
 
 function update_items_display(){
+    // display correct amount of items
     const checkout_header = document.querySelector(".js-checkout-header-text");
     checkout_header.innerHTML = `${compute_cart_quantity()} items`;
 }
@@ -187,6 +190,8 @@ function add_all_listeners(){
                 const product_id = option.dataset.productId;
                 const od_id = option.dataset.deliveryId;  
                 update_delivery_option(product_id, od_id);
+                // instead of selecting element with DOM, simply re-render the entire page
+                render_order_summary();
             });
         });
 }
@@ -194,8 +199,7 @@ function add_all_listeners(){
 
 
 function main(){
-    render_checkout_page();
-    add_all_listeners();
+    render_order_summary();
 
 }
 
