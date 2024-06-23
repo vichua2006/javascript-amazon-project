@@ -3,6 +3,7 @@ import { find_product_by_id } from "../../data/products.js";
 import { format_currency } from "../utils/money.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 import { delivery_options, find_delivery_option_by_id } from "../../data/deliveryOptions.js";
+import { render_payment_summary } from "./paymentSummary.js";
 
 function n_days(days){
     const today = dayjs();
@@ -138,6 +139,9 @@ function add_all_listeners(){
 
                 update_items_display();
                 // also possible delete from carte and re-render, but this bit of code must be placed in the render function
+
+                // MVC design for payment summary:
+                render_payment_summary();
             });
         });
 
@@ -167,6 +171,7 @@ function add_all_listeners(){
                 change_item_quantity_by_id(product_id, new_quantity);
 
                 update_items_display();
+                render_payment_summary();
             });
         });
 
@@ -179,6 +184,7 @@ function add_all_listeners(){
                 update_delivery_option(product_id, od_id);
                 // instead of selecting element with DOM, simply re-render the entire page
                 render_order_summary();
+                render_payment_summary();
             });
         });
 }
