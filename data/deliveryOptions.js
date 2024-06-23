@@ -15,3 +15,9 @@ export const delivery_options = [
         priceCent: 999,
     }
 ];
+
+export function find_delivery_option_by_id(option_id){
+    for (let option of delivery_options){
+        if (option.id === option_id) return option;
+    }
+}

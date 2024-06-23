@@ -1,4 +1,13 @@
 import { format_currency } from "../scripts/utils/money.js";
+
+export function find_product_by_id(product_id) {
+  for (const product of products){
+      if (product.id === product_id) return product;
+  }
+
+  return false;
+}
+
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",

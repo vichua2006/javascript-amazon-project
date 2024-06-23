@@ -1,16 +1,8 @@
 import { cart, remove_from_cart, compute_cart_quantity, change_item_quantity_by_id, update_delivery_option } from "../../data/cart.js";
-import { products } from "../../data/products.js";
+import { find_product_by_id } from "../../data/products.js";
 import { format_currency } from "../utils/money.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
-import { delivery_options } from "../../data/deliveryOptions.js";
-
-function find_product_by_id(product_id) {
-    for (const product of products){
-        if (product.id === product_id) return product;
-    }
-
-    return false;
-}
+import { delivery_options, find_delivery_option_by_id } from "../../data/deliveryOptions.js";
 
 function n_days(days){
     const today = dayjs();
@@ -27,12 +19,7 @@ function generate_checkout_products_html() {
         const matching_product = find_product_by_id(item_id);
         // if (!matching_product) continue; // can't because it's a forEach iteration
 
-        let delivery_option;
-        for (let option of delivery_options){
-            if (cart_item.delivery_options === option.id){
-                delivery_option = option;
-            }
-        }
+        const delivery_option = find_delivery_option_by_id(cart_item.delivery_options)
 
         const day_string = n_days(delivery_option.delivery_days);
         
