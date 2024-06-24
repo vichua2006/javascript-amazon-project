@@ -112,14 +112,14 @@ function generate_delivery_options_html(matching_product, cart_item){
     return combined_html;
 }
 
-function render_order_summary(){
+export function render_order_summary(){
     document.querySelector(".js-order-summary").innerHTML = generate_checkout_products_html();
-    update_items_display();
+    // update_items_display();
 
     add_all_listeners();
 }
 
-function update_items_display(){
+export function update_items_display(){
     // display correct amount of items
     const checkout_header = document.querySelector(".js-checkout-header-text");
     checkout_header.innerHTML = `${compute_cart_quantity()} items`;
