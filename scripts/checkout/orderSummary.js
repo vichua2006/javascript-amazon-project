@@ -6,6 +6,7 @@ import { delivery_options, find_delivery_option_by_id } from "../../data/deliver
 import { render_payment_summary } from "./paymentSummary.js";
 
 function n_days(days){
+    // returns a string stating that day that is n days from today
     const today = dayjs();
     const new_date = today.add(days, "days");
     const date_string = new_date.format("dddd, MMMM D");
@@ -134,13 +135,14 @@ function add_all_listeners(){
                 remove_from_cart(product_id);
                 
                 // removing html element
-                const container = document.querySelector(`.js-cart-item-container-${product_id}`)
-                container.remove();
+                // const container = document.querySelector(`.js-cart-item-container-${product_id}`)
+                // container.remove();
 
-                update_items_display();
+                // update_items_display();
                 // also possible delete from carte and re-render, but this bit of code must be placed in the render function
 
                 // MVC design for payment summary:
+                render_order_summary();
                 render_payment_summary();
             });
         });
