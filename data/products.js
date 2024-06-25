@@ -23,7 +23,33 @@ class Product {
     // still return as string
     return `${format_currency(this.priceCents)}`;
   }
+
+  // using polymorphism;
+  extra_info_html() {
+    return "";
+  }
 }
+
+class Clothing extends Product {
+  size_chart_link;
+  
+  constructor(product_details) {
+    // calls the parent constructor;
+    // if not defined, parent's constructor will be called by default
+    super(product_details);
+    this.size_chart_link = product_details.sizeChartLink;
+  }
+
+  extra_info_html() {
+    // _blank is to open on a new page 
+    return `
+    <a href="${this.size_chart_link}" target="_blank">
+      Size Chart
+    </a>
+    `;
+  }
+}
+
 
 export function generate_products_html() {
   let combined_product_html = "";
@@ -65,6 +91,8 @@ export function generate_products_html() {
                   <option value="10">10</option>
                   </select>
               </div>
+
+              ${product.extra_info_html()}
 
               <div class="product-spacer"></div>
 
@@ -753,5 +781,8 @@ export const products = [
     ]
   }
 ].map((product_details) => {
+  if (product_details.type === "clothing") {
+    return new Clothing(product_details);
+  }
   return new Product(product_details);
 }); // using map() to create an array of Product objects
