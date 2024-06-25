@@ -50,6 +50,25 @@ class Clothing extends Product {
   }
 }
 
+class Applicance extends Product {
+  instruction_link;
+  warranty_link; 
+  constructor(product_details) {
+    super(product_details);
+    this.instruction_link = product_details.instructionLink; 
+    this.warranty_link = product_details.warrantyLink;
+  }
+
+  extra_info_html() {
+    return `
+      <a href="${this.instruction_link}" target="_blank"> Instruction Link</a>
+      <a href="${this.warranty_link}" target="_blank">Warrenty Link</a>
+    `;
+  }
+
+}
+
+
 
 export function generate_products_html() {
   let combined_product_html = "";
@@ -181,7 +200,10 @@ export const products = [
       "toaster",
       "kitchen",
       "appliances"
-    ]
+    ],
+    type: "appliances",
+    instructionLink: "images/appliance-instructions.png",
+    warrantyLink: "images/appliance-warranty.png",
   },
   {
     id: "3ebe75dc-64d2-4137-8860-1f5a963e534b",
@@ -783,6 +805,7 @@ export const products = [
 ].map((product_details) => {
   if (product_details.type === "clothing") {
     return new Clothing(product_details);
-  }
-  return new Product(product_details);
+  } else if (product_details.type === "appliances"){
+    return new Applicance(product_details);
+  } else return new Product(product_details);
 }); // using map() to create an array of Product objects
