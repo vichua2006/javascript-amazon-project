@@ -114,7 +114,7 @@ function generate_delivery_options_html(matching_product, cart_item){
 
 export function render_order_summary(){
     document.querySelector(".js-order-summary").innerHTML = generate_checkout_products_html();
-    // update_items_display();
+    update_items_display();
 
     add_all_listeners();
 }
@@ -192,3 +192,6 @@ function add_all_listeners(){
 }
 
 export default render_order_summary;
+
+
+console.log(cart);

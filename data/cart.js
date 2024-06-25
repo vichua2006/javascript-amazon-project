@@ -21,19 +21,23 @@ export function load_from_storage() {
 export function add_to_cart(product_id){
     const select_element = document.querySelector(`.js-product-quantity-select[data-product-id="${product_id}"]`);
     const selected_quantity = parseInt(select_element.value);
+    let exists = false;
     for (const item of cart){
         if (item.id === product_id){
             item.quantity += selected_quantity;
-            return;
+            exists = true;
+            break;
         }
     }
 
-    cart.push({
-        id: product_id,
-        quantity: selected_quantity,
-        // option 1 as default
-        delivery_options: "1",
-    });
+    if (!exists){
+        cart.push({
+            id: product_id,
+            quantity: selected_quantity,
+            // option 1 as default
+            delivery_options: "1",
+        });
+    }
 
     save_to_storage();
 }
@@ -91,3 +95,5 @@ export function update_delivery_option(product_id, delivery_option_id){
     save_to_storage();
     return;
 }
+
+load_from_storage();
