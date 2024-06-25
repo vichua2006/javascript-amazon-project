@@ -1,14 +1,15 @@
 class Cart {
     cart_items;
-    local_storage_key;
+    // # private declaration
+    #local_storage_key;
 
     constructor(storage_key) {
-        this.local_storage_key = storage_key;
-        this.load_from_storage();
+        this.#local_storage_key = storage_key;
+        this.#load_from_storage();
     }
 
-    load_from_storage() {
-        this.cart_items = JSON.parse(localStorage.getItem(this.local_storage_key));
+    #load_from_storage() {
+        this.cart_items = JSON.parse(localStorage.getItem(this.#local_storage_key));
         
         if (!this.cart_items) {
             // default values
@@ -27,9 +28,9 @@ class Cart {
         }
     }
 
-    save_to_storage(){
+    #save_to_storage(){
         const cart_json = JSON.stringify(this.cart_items);
-        localStorage.setItem(this.local_storage_key, cart_json);
+        localStorage.setItem(this.#local_storage_key, cart_json);
     }
     
 
@@ -54,7 +55,7 @@ class Cart {
             });
         }
     
-        this.save_to_storage();
+        this.#save_to_storage();
     }
 
     update_cart_quantity(){
@@ -71,7 +72,7 @@ class Cart {
         }
     
         if (idx > -1) this.cart_items.splice(idx, 1);
-        save_to_storage();
+        #save_to_storage();
     }
 
     compute_cart_quantity(){
@@ -88,7 +89,7 @@ class Cart {
             }
         }
     
-        save_to_storage();
+        #save_to_storage();
     }
     
     update_delivery_option(product_id, delivery_option_id){
@@ -102,7 +103,7 @@ class Cart {
         
         matching_item.delivery_options = delivery_option_id;
         // updated carte, thus update storage;
-        save_to_storage();
+        #save_to_storage();
         return;
     }
     
