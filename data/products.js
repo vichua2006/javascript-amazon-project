@@ -1,5 +1,90 @@
 import { format_currency } from "../scripts/utils/money.js";
 
+class Product {
+  id;
+  image;
+  name;
+  rating;
+  priceCents;
+
+  constructor(product_details){
+    this.id = product_details.id;
+    this.image = product_details.image;
+    this.name = product_details.name;
+    this.rating = product_details.rating;
+    this.priceCents = product_details.priceCents;
+  }
+
+  get_stars_url() {
+    return `images/ratings/rating-${this.rating.stars * 10}.png`;
+  }
+
+  get_price() {
+    // still return as string
+    return `${format_currency(this.priceCents)}`;
+  }
+}
+
+export function generate_products_html() {
+  let combined_product_html = "";
+  products.forEach((product) => {
+      const product_html = `
+          <div class="product-container">
+              <div class="product-image-container">
+                  <img class="product-image"
+                  src="${product.image}">
+              </div>
+
+              <div class="product-name limit-text-to-2-lines">
+                  ${product.name}
+              </div>
+
+              <div class="product-rating-container">
+                  <img class="product-rating-stars"
+                  src="${product.get_stars_url()}">
+                  <div class="product-rating-count link-primary">
+                  ${product.rating.count}
+                  </div>
+              </div>
+
+              <div class="product-price">
+                  $${product.get_price()}
+              </div>
+
+              <div class="product-quantity-container">
+                  <select class="js-product-quantity-select"  data-product-id="${product.id}">
+                  <option selected value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  </select>
+              </div>
+
+              <div class="product-spacer"></div>
+
+              <div class="added-to-cart js-added-to-cart-${product.id}">
+                  <img src="images/icons/checkmark.png">
+                  Added
+              </div>
+
+              <button class="add-to-cart-button button-primary js-add-to-cart-button" data-product-id="${product.id}">
+                  Add to Cart
+              </button>
+          </div>
+      `
+
+      combined_product_html += product_html;
+  });
+
+  return combined_product_html;
+}
+
 export function find_product_by_id(product_id) {
   for (const product of products){
       if (product.id === product_id) return product;
@@ -667,67 +752,6 @@ export const products = [
       "mens"
     ]
   }
-];
-
-
-export function generate_products_html() {
-  let combined_product_html = "";
-  products.forEach((product) => {
-      const product_html = `
-          <div class="product-container">
-              <div class="product-image-container">
-                  <img class="product-image"
-                  src="${product.image}">
-              </div>
-
-              <div class="product-name limit-text-to-2-lines">
-                  ${product.name}
-              </div>
-
-              <div class="product-rating-container">
-                  <img class="product-rating-stars"
-                  src="images/ratings/rating-${product.rating.stars * 10}.png">
-                  <div class="product-rating-count link-primary">
-                  ${product.rating.count}
-                  </div>
-              </div>
-
-              <div class="product-price">
-                  $${format_currency(product.priceCents)}
-              </div>
-
-              <div class="product-quantity-container">
-                  <select class="js-product-quantity-select"  data-product-id="${product.id}">
-                  <option selected value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                  </select>
-              </div>
-
-              <div class="product-spacer"></div>
-
-              <div class="added-to-cart js-added-to-cart-${product.id}">
-                  <img src="images/icons/checkmark.png">
-                  Added
-              </div>
-
-              <button class="add-to-cart-button button-primary js-add-to-cart-button" data-product-id="${product.id}">
-                  Add to Cart
-              </button>
-          </div>
-      `
-
-      combined_product_html += product_html;
-  });
-
-  return combined_product_html;
-}
-
-
+].map((product_details) => {
+  return new Product(product_details);
+}); // using map() to create an array of Product objects

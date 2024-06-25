@@ -40,7 +40,7 @@ function generate_checkout_products_html() {
                             ${matching_product.name}
                         </div>
                         <div class="product-price">
-                            $${format_currency(matching_product.priceCents)}
+                            $${matching_product.get_price()}
                         </div>
                         <div class="product-quantity">
                             <span>

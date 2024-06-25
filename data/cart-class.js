@@ -55,7 +55,7 @@ class Cart {
             });
         }
     
-        this.#save_to_storage();
+        this.this.#save_to_storage();
     }
 
     update_cart_quantity(){
@@ -72,7 +72,7 @@ class Cart {
         }
     
         if (idx > -1) this.cart_items.splice(idx, 1);
-        #save_to_storage();
+        this.#save_to_storage();
     }
 
     compute_cart_quantity(){
@@ -89,7 +89,7 @@ class Cart {
             }
         }
     
-        #save_to_storage();
+        this.#save_to_storage();
     }
     
     update_delivery_option(product_id, delivery_option_id){
@@ -103,7 +103,7 @@ class Cart {
         
         matching_item.delivery_options = delivery_option_id;
         // updated carte, thus update storage;
-        #save_to_storage();
+        this.#save_to_storage();
         return;
     }
     
