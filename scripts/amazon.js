@@ -1,4 +1,4 @@
-import { products, generate_products_html } from "../data/products.js";
+import { products, generate_products_html, load_products} from "../data/products.js";
 import { cart, add_to_cart, update_cart_quantity } from "../data/cart.js";
 
 
@@ -15,7 +15,7 @@ function show_added(product_id, timeout_id){
 }
 
 function main() {
-    document.querySelector(".js-products-grid").innerHTML = generate_products_html();
+    load_products(generate_products_html);
     update_cart_quantity();
 
     document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
